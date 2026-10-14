@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IskoQueue – Food stalls around PUP</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet (free map library, uses OpenStreetMap – no API key needed) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========== PAGE 1: Home / search ========== -->
+  <section class="home" id="home">
+    <nav class="home-nav">
+      <div class="nav-brand">
+        <!-- Put the PUP logo file at images/pup-logo.png -->
+        <img class="logo logo-md" src="images/pup-logo.png" alt="PUP logo" onerror="this.style.display='none'" />
+        <span>IskoQueue</span>
+      </div>
+      <div class="account" id="account-home"></div>
+    </nav>
+
+    <div class="home-inner">
+      <h1>What are you craving right now?</h1>
+      <p class="home-sub">Find food stalls inside PUP Sta. Mesa, see their menus, and check where they are.</p>
+
+      <form class="crave" id="crave-form" role="search">
+        <label class="sr-only" for="crave-input">What are you craving?</label>
+        <input id="crave-input" type="search" placeholder="Try &quot;milk tea&quot;, &quot;silog&quot; or &quot;turon&quot;" autocomplete="off" />
+        <button type="submit">Find food</button>
+      </form>
+
+      <div class="home-group">
+        <p class="home-label">Popular right now</p>
+        <div class="home-chips" id="suggest"></div>
+      </div>
+
+      <div class="home-group">
+        <p class="home-label">Or browse by type</p>
+        <div class="home-chips" id="home-cats"></div>
+      </div>
+
+      <button class="link-btn" type="button" id="see-all">See all stalls on the map</button>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 2: Log in / Sign up ========== -->
+  <section class="auth" id="auth" hidden>
+    <div class="auth-card">
+      <img class="logo logo-lg" src="images/pup-logo.png" alt="PUP logo" onerror="this.style.display='none'" />
+      <h2 id="auth-title">Log in</h2>
+      <p class="auth-sub" id="auth-sub">Welcome back.</p>
+
+      <div class="auth-tabs">
+        <button type="button" id="tab-login" aria-pressed="true">Log in</button>
+        <button type="button" id="tab-signup" aria-pressed="false">Sign up</button>
+      </div>
+
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" required autocomplete="email" />
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" required autocomplete="current-password" />
+        <button class="submit" type="submit">Log in</button>
+      </form>
+
+      <form id="signup-form" hidden>
+        <label for="signup-name">Full name</label>
+        <input id="signup-name" type="text" required autocomplete="name" />
+        <label for="signup-email">Email</label>
+        <input id="signup-email" type="email" required autocomplete="email" />
+        <label for="signup-password">Password (at least 8 characters)</label>
+        <input id="signup-password" type="password" required minlength="8" autocomplete="new-password" />
+        <button class="submit" type="submit">Create account</button>
+      </form>
+
+      <p class="form-msg" id="auth-msg" role="alert"></p>
+      <button class="link-btn dark" type="button" id="auth-back">Back to search</button>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 3: Results (list + map) ========== -->
+  <div id="results" hidden>
+    <header class="topbar">
+      <h1 class="brand">
+        <button type="button" id="brand">
+          <img class="logo logo-sm" src="images/pup-logo.png" alt="PUP logo" onerror="this.style.display='none'" />
+          <span>IskoQueue</span>
+        </button>
+      </h1>
+      <label class="search">
+        <span class="sr-only">Search stalls or dishes</span>
+        <input id="search" type="search" placeholder="Search a stall or a dish" autocomplete="off" />
+      </label>
+      <div class="account" id="account-results"></div>
+    </header>
+
+    <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+
+    <main class="layout">
+      <section class="panel" id="panel">
+        <!-- List of businesses -->
+        <div id="list-view">
+          <p class="count" id="count" aria-live="polite"></p>
+          <ul class="cards" id="cards"></ul>
+        </div>
+
+        <!-- Details + menu of one business -->
+        <article id="detail-view" hidden></article>
+      </section>
+
+      <div id="map" aria-label="Map of food stalls"></div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
